@@ -31,6 +31,12 @@ app.get("/book/list", async (req, res) => {
   res.status(200).json(await Book.find());
 });
 
+app.delete("/book/delete/:id", async (req, res) => {
+  await Book.deleteOne({ _id: req.params.id });
+
+  res.status(200).send("Book Deleted");
+});
+
 app.listen(3000, () => {
   console.log("Server is listening on port 3000!");
 });
