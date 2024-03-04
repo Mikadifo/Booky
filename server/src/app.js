@@ -1,5 +1,6 @@
 require("dotenv").config({ path: "./../.env" });
 const express = require("express");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Book = require("./models/book.js");
 
@@ -13,14 +14,21 @@ async function main() {
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/books", async (req, res) => {
-  console.log(await Book.find());
+app.post("/book/create", async (req, res) => {
+  await Book.create(req.body);
 
-  res.send("Books Displayed!");
+  res.status(200).send("Book Saved");
+});
+
+app.get("/book/list", async (req, res) => {
+  res.status(200).json(await Book.find());
 });
 
 app.listen(3000, () => {
