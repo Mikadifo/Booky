@@ -31,6 +31,12 @@ app.get("/book/list", async (req, res) => {
   res.status(200).json(await Book.find());
 });
 
+app.put("/book/update/:id", async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.id, req.body);
+
+  res.status(200).send("Book Updated");
+});
+
 app.delete("/book/delete/:id", async (req, res) => {
   await Book.deleteOne({ _id: req.params.id });
 
