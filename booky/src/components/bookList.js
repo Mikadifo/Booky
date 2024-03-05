@@ -1,6 +1,23 @@
+"use client";
+import { useEffect, useState } from "react";
 import BookCard from "./bookCard";
 
-const BookList = ({ books }) => {
+//TODO: move this to its own file
+const BASE_URL = "http://localhost:8000/book";
+
+const BookList = () => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const fetchAllBooks = () => {
+      fetch(BASE_URL + "/list")
+        .then((res) => res.json())
+        .then((data) => setBooks(data));
+    };
+
+    fetchAllBooks();
+  }, []);
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg my-16 mx-16">
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
@@ -35,7 +52,7 @@ const BookList = ({ books }) => {
         <TableHead />
         <tbody>
           {books.map((book) => (
-            <BookCard book={book} key={book.id} />
+            <BookCard book={book} key={book._id} />
           ))}
         </tbody>
       </table>
