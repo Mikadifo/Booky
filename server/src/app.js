@@ -15,6 +15,6 @@ app.use(bodyParser.json());
 app.use(require("./routes.js"));
 app.use(require("./serverErrorHandler.js"));
 
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log("Server is listening on port 3000!");
 });
