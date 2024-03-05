@@ -12,12 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`bg-slate-500 ${inter.className}`}>
         <Header />
         {children}
-        <footer className="bg-slate-700 text-gray-100 text-center py-3">
+        <footer className="bg-slate-700 text-gray-100 text-center py-3 mt-16">
           <p>
-            2024 <a href="#">Booky.example</a>
+            2024{" "}
+            <a href="#" className="underline hover:font-bold">
+              Booky.com
+            </a>
           </p>
         </footer>
       </body>
