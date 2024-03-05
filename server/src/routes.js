@@ -8,8 +8,21 @@ recordRoutes.route("/").get((_, res) => {
 });
 
 recordRoutes.route("/book/create").post(async (req, res) => {
-  await Book.create(req.body);
-  res.status(201).send("Book Saved");
+  const book = Book(req.body);
+  const error = book.validateSync();
+  if (error && error.name === "ValidationError") {
+    res.status(400).json({
+      message: "",
+      error: error.message,
+    });
+  } else {
+    await book.save();
+    res.status(201).json({
+      message: "Book saved!",
+      error: "",
+      data: { book: req.body },
+    });
+  }
 });
 
 recordRoutes.route("/book/list").get(async (_, res) => {
