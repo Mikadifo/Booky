@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import BookCard from "./bookCard";
+import CreateBookModal from "./createBookModal";
 
 //TODO: move this to its own file
 const BASE_URL = "http://localhost:8000/book";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
     const fetchAllBooks = () => {
@@ -18,9 +20,20 @@ const BookList = () => {
     fetchAllBooks();
   }, []);
 
+  if (isModalActive) {
+    return <CreateBookModal setIsModalActive={setIsModalActive} />;
+  }
+
   return (
     <div className="relative overflow-x-auto sm:rounded-lg my-16 mx-16">
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+        <button
+          className="bg-green-900 text-gray-200 font-bold py-2 px-6 rounded-lg"
+          onClick={() => setIsModalActive(true)}
+          type="button"
+        >
+          New
+        </button>
         <label htmlFor="table-search" className="sr-only">
           Search
         </label>
