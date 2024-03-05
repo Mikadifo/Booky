@@ -13,10 +13,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(require("./routes.js"));
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something went wrong!");
-});
+app.use(require("./serverErrorHandler.js"));
 
 app.listen(3000, () => {
   console.log("Server is listening on port 3000!");
