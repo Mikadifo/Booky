@@ -15,6 +15,11 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Header />
         {children}
+        <footer className="bg-slate-700 text-gray-100 text-center py-3">
+          <p>
+            2024 <a href="#">Booky.example</a>
+          </p>
+        </footer>
       </body>
     </html>
   );
