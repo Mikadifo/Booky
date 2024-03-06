@@ -14,9 +14,9 @@ const BookModal = ({ setIsModalActive, book = {} }) => {
     book.availableOnline || false
   );
 
-  const createBook = (body) => {
-    fetch(`${BASE_URL}/create`, {
-      method: "POST",
+  const saveBook = (id, body, url) => {
+    fetch(url, {
+      method: id ? "PUT" : "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -34,21 +34,20 @@ const BookModal = ({ setIsModalActive, book = {} }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (book._id) {
-      console.log("edidint ");
-      //TODO: edit fetch
-    } else {
-      const book = {
-        title,
-        author,
-        genre,
-        isbn,
-        year: parseInt(year),
-        copies: parseInt(copies),
-        availableOnline,
-      };
+    const newBook = {
+      title,
+      author,
+      genre,
+      isbn,
+      year: parseInt(year),
+      copies: parseInt(copies),
+      availableOnline,
+    };
 
-      createBook(book);
+    if (book._id) {
+      saveBook(book._id, newBook, `${BASE_URL}/update/${book._id}`);
+    } else {
+      saveBook(null, newBook, `${BASE_URL}/create`);
     }
   };
 
