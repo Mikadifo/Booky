@@ -48,7 +48,7 @@ recordRoutes.route("/book/update/:id").put(async (req, res) => {
 
 recordRoutes.route("/book/delete/:id").delete(async (req, res) => {
   await Book.deleteOne({ _id: req.params.id });
-  res.status(200).send("Book Deleted");
+  res.status(200).json({ message: "Book Deleted", error: "" });
 });
 
 recordRoutes.route("*").all((req, res) => {
