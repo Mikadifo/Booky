@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/constants";
 import { useState } from "react";
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -9,7 +10,7 @@ const CreateBookModal = ({ setIsModalActive }) => {
   const [isbn, setIsbn] = useState("");
   const [year, setYear] = useState(1);
   const [copies, setCopies] = useState(1);
-  const [isAvailableOnline, setIsAvailableOnline] = useState(false);
+  const [availableOnline, setAvailableOnline] = useState(false);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -18,12 +19,30 @@ const CreateBookModal = ({ setIsModalActive }) => {
       author,
       genre,
       isbn,
-      year,
-      copies,
-      isAvailableOnline,
+      year: parseInt(year),
+      copies: parseInt(copies),
+      availableOnline,
     };
 
-    console.log(book);
+    const createBook = (body) => {
+      fetch(`${BASE_URL}/create`, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            //TODO: Show a notification
+            console.log(data.error);
+          } else {
+            setIsModalActive(false);
+          }
+        });
+    };
+
+    createBook(book);
   };
 
   return (
@@ -158,11 +177,9 @@ const CreateBookModal = ({ setIsModalActive }) => {
               <label className="inline-flex items-center mb-5 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={isAvailableOnline}
+                  checked={availableOnline}
                   className="sr-only peer"
-                  onChange={({ target }) =>
-                    setIsAvailableOnline(target.checked)
-                  }
+                  onChange={({ target }) => setAvailableOnline(target.checked)}
                 />
                 <div className="relative w-11 h-6 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-black-300 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all peer-checked:bg-blue-600" />
                 <span className="ms-3 text-md font-bold text-gray-800">

@@ -2,9 +2,7 @@
 import { useEffect, useState } from "react";
 import BookCard from "./bookCard";
 import CreateBookModal from "./createBookModal";
-
-//TODO: move this to its own file
-const BASE_URL = "http://localhost:8000/book";
+import { BASE_URL } from "@/constants";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -12,7 +10,7 @@ const BookList = () => {
 
   useEffect(() => {
     const fetchAllBooks = () => {
-      fetch(BASE_URL + "/list")
+      fetch(`${BASE_URL}/list`)
         .then((res) => res.json())
         .then((data) => setBooks(data));
     };
