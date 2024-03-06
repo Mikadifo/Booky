@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import BookCard from "./bookCard";
 import BookModal from "./bookModal";
 import { BASE_URL } from "@/constants";
+import { bookFilter } from "@/utils/filters";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [search, setSearch] = useState("");
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
 
@@ -13,11 +16,20 @@ const BookList = () => {
     const fetchAllBooks = () => {
       fetch(`${BASE_URL}/list`)
         .then((res) => res.json())
-        .then((data) => setBooks(data));
+        .then((data) => {
+          setBooks(data);
+          setFilteredBooks(data);
+        });
     };
 
     fetchAllBooks();
   }, []);
+
+  const handleSearch = ({ target }) => {
+    setSearch(target.value);
+    const searchTerm = target.value.toUpperCase();
+    setFilteredBooks(bookFilter(books, searchTerm));
+  };
 
   if (isModalActive && selectedBook) {
     return (
@@ -39,9 +51,6 @@ const BookList = () => {
         >
           New
         </button>
-        <label htmlFor="table-search" className="sr-only">
-          Search
-        </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
             <svg
@@ -62,6 +71,8 @@ const BookList = () => {
             type="text"
             id="table-search"
             className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gay-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            value={search}
+            onChange={handleSearch}
             placeholder="Search for items"
           />
         </div>
@@ -69,7 +80,7 @@ const BookList = () => {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <TableHead />
         <tbody>
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <tr
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 hover:cursor-pointer"
               key={book._id}
