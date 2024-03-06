@@ -11,6 +11,21 @@ const CreateBookModal = ({ setIsModalActive }) => {
   const [copies, setCopies] = useState(1);
   const [isAvailableOnline, setIsAvailableOnline] = useState(false);
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const book = {
+      title,
+      author,
+      genre,
+      isbn,
+      year,
+      copies,
+      isAvailableOnline,
+    };
+
+    console.log(book);
+  };
+
   return (
     <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
       <div className="bg-slate-200 m-auto py-8 px-16 rounded-lg">
@@ -18,7 +33,7 @@ const CreateBookModal = ({ setIsModalActive }) => {
           <h2 className="font-bold text-2xl text-gray-800">Create Book</h2>
           <br />
 
-          <form className="max-w-sm mx-auto">
+          <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
                 htmlFor="title"
@@ -145,7 +160,6 @@ const CreateBookModal = ({ setIsModalActive }) => {
                   type="checkbox"
                   checked={isAvailableOnline}
                   className="sr-only peer"
-                  required
                   onChange={({ target }) =>
                     setIsAvailableOnline(target.checked)
                   }
@@ -165,9 +179,8 @@ const CreateBookModal = ({ setIsModalActive }) => {
                 Close
               </button>
               <button
-                type="button"
+                type="submit"
                 className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
-                onClick={() => {}}
               >
                 Create
               </button>
