@@ -14,12 +14,28 @@ const BookModal = ({ setIsModalActive, book = {} }) => {
     book.availableOnline || false
   );
 
-  const saveBook = (id, body, url) => {
+  const saveBook = (body, url) => {
     fetch(url, {
-      method: id ? "PUT" : "POST",
+      method: book._id ? "PUT" : "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          //TODO: Show a notification
+          console.log(data.error);
+        } else {
+          setIsModalActive(false);
+        }
+      });
+  };
+
+  const deleteBook = () => {
+    fetch(`${BASE_URL}/delete/${book._id}`, {
+      method: "DELETE",
+      mode: "cors",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -45,10 +61,16 @@ const BookModal = ({ setIsModalActive, book = {} }) => {
     };
 
     if (book._id) {
-      saveBook(book._id, newBook, `${BASE_URL}/update/${book._id}`);
+      saveBook(newBook, `${BASE_URL}/update/${book._id}`);
     } else {
       saveBook(null, newBook, `${BASE_URL}/create`);
     }
+  };
+
+  const handleDelete = (evt) => {
+    evt.preventDefault();
+    const confirmation = confirm(`Delete ${book.title}?`);
+    if (confirmation) deleteBook();
   };
 
   return (
@@ -204,12 +226,21 @@ const BookModal = ({ setIsModalActive, book = {} }) => {
                 Close
               </button>
               {book._id ? (
-                <button
-                  type="submit"
-                  className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
-                >
-                  Save
-                </button>
+                <>
+                  <button
+                    type="button"
+                    className="bg-orange-700 text-gray-100 px-4 py-2 rounded-md"
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
+                  >
+                    Save
+                  </button>
+                </>
               ) : (
                 <button
                   type="submit"
