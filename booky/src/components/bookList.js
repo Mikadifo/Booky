@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import BookCard from "./bookCard";
-import CreateBookModal from "./createBookModal";
+import BookModal from "./bookModal";
 import { BASE_URL } from "@/constants";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  const [selectedBook, setSelectedBook] = useState(null);
   const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
@@ -18,8 +19,14 @@ const BookList = () => {
     fetchAllBooks();
   }, []);
 
+  if (isModalActive && selectedBook) {
+    return (
+      <BookModal setIsModalActive={setIsModalActive} book={selectedBook} />
+    );
+  }
+
   if (isModalActive) {
-    return <CreateBookModal setIsModalActive={setIsModalActive} />;
+    return <BookModal setIsModalActive={setIsModalActive} />;
   }
 
   return (
@@ -63,7 +70,16 @@ const BookList = () => {
         <TableHead />
         <tbody>
           {books.map((book) => (
-            <BookCard book={book} key={book._id} />
+            <tr
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 hover:cursor-pointer"
+              key={book._id}
+              onClick={() => {
+                setIsModalActive(true);
+                setSelectedBook(book);
+              }}
+            >
+              <BookCard book={book} />
+            </tr>
           ))}
         </tbody>
       </table>

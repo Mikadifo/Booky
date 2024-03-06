@@ -3,53 +3,62 @@ import { useState } from "react";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-const CreateBookModal = ({ setIsModalActive }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [genre, setGenre] = useState("");
-  const [isbn, setIsbn] = useState("");
-  const [year, setYear] = useState(1);
-  const [copies, setCopies] = useState(1);
-  const [availableOnline, setAvailableOnline] = useState(false);
+const BookModal = ({ setIsModalActive, book = {} }) => {
+  const [title, setTitle] = useState(book.title || "");
+  const [author, setAuthor] = useState(book.author || "");
+  const [genre, setGenre] = useState(book.genre || "");
+  const [isbn, setIsbn] = useState(book.isbn || "");
+  const [year, setYear] = useState(book.year || 1);
+  const [copies, setCopies] = useState(book.copies || 1);
+  const [availableOnline, setAvailableOnline] = useState(
+    book.availableOnline || false
+  );
+
+  const createBook = (body) => {
+    fetch(`${BASE_URL}/create`, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          //TODO: Show a notification
+          console.log(data.error);
+        } else {
+          setIsModalActive(false);
+        }
+      });
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const book = {
-      title,
-      author,
-      genre,
-      isbn,
-      year: parseInt(year),
-      copies: parseInt(copies),
-      availableOnline,
-    };
+    if (book._id) {
+      console.log("edidint ");
+      //TODO: edit fetch
+    } else {
+      const book = {
+        title,
+        author,
+        genre,
+        isbn,
+        year: parseInt(year),
+        copies: parseInt(copies),
+        availableOnline,
+      };
 
-    const createBook = (body) => {
-      fetch(`${BASE_URL}/create`, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            //TODO: Show a notification
-            console.log(data.error);
-          } else {
-            setIsModalActive(false);
-          }
-        });
-    };
-
-    createBook(book);
+      createBook(book);
+    }
   };
 
   return (
     <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
       <div className="bg-slate-200 m-auto py-8 px-16 rounded-lg">
         <div className="flex flex-col items-center">
-          <h2 className="font-bold text-2xl text-gray-800">Create Book</h2>
+          <h2 className="font-bold text-2xl text-gray-800">
+            {book._id ? "Edit Book" : "Create Book"}
+          </h2>
           <br />
 
           <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
@@ -195,12 +204,21 @@ const CreateBookModal = ({ setIsModalActive }) => {
               >
                 Close
               </button>
-              <button
-                type="submit"
-                className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
-              >
-                Create
-              </button>
+              {book._id ? (
+                <button
+                  type="submit"
+                  className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
+                >
+                  Create
+                </button>
+              )}
             </div>
           </form>
         </div>
@@ -209,4 +227,4 @@ const CreateBookModal = ({ setIsModalActive }) => {
   );
 };
 
-export default CreateBookModal;
+export default BookModal;
