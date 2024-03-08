@@ -6,6 +6,7 @@ import { BASE_URL } from "@/constants";
 import { bookFilter } from "@/utils/filters";
 import TableHead from "./tableHead";
 import SearchIcon from "@/resources/searchIcon";
+import Button from "./button";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -42,16 +43,15 @@ const BookList = () => {
   return (
     <div className="relative overflow-x-auto sm:rounded-lg my-16 mx-16">
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-        <button
-          className="bg-green-900 text-gray-200 font-bold py-2 px-6 rounded-lg"
+        <Button
+          type="button"
+          label="New"
+          color="green-800"
           onClick={() => {
             setSelectedBook({});
             setIsModalActive(true);
           }}
-          type="button"
-        >
-          New
-        </button>
+        />
         <div className="relative">
           <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
             <SearchIcon />

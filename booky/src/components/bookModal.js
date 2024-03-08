@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/constants";
 import { useState } from "react";
 import Input from "./input";
+import Button from "./button";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -173,38 +174,21 @@ const BookModal = ({ setIsModalActive, book }) => {
               </label>
             </div>
             <div className="flex justify-around mt-8">
-              <button
+              <Button
                 type="button"
-                className="bg-red-800 text-gray-100 px-4 py-2 rounded-md"
+                label="Close"
+                color="red-800"
                 onClick={() => {
                   setIsModalActive(false);
                 }}
-              >
-                Close
-              </button>
+              />
               {book._id ? (
                 <>
-                  <button
-                    type="button"
-                    className="bg-orange-700 text-gray-100 px-4 py-2 rounded-md"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
-                  >
-                    Save
-                  </button>
+                  <Button type="button" label="Delete" color="orange-700" />
+                  <Button type="submit" label="Save" color="green-800" />
                 </>
               ) : (
-                <button
-                  type="submit"
-                  className="bg-green-800 text-gray-100 px-4 py-2 rounded-md"
-                >
-                  Create
-                </button>
+                <Button type="submit" label="Create" color="green-800" />
               )}
             </div>
           </form>
