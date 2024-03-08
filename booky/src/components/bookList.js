@@ -9,7 +9,7 @@ const BookList = () => {
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [search, setSearch] = useState("");
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState({});
   const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
@@ -31,14 +31,10 @@ const BookList = () => {
     setFilteredBooks(bookFilter(books, searchTerm));
   };
 
-  if (isModalActive && selectedBook) {
+  if (isModalActive) {
     return (
       <BookModal setIsModalActive={setIsModalActive} book={selectedBook} />
     );
-  }
-
-  if (isModalActive) {
-    return <BookModal setIsModalActive={setIsModalActive} />;
   }
 
   return (
@@ -46,7 +42,10 @@ const BookList = () => {
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
         <button
           className="bg-green-900 text-gray-200 font-bold py-2 px-6 rounded-lg"
-          onClick={() => setIsModalActive(true)}
+          onClick={() => {
+            setSelectedBook({});
+            setIsModalActive(true);
+          }}
           type="button"
         >
           New
@@ -85,8 +84,8 @@ const BookList = () => {
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 hover:cursor-pointer"
               key={book._id}
               onClick={() => {
-                setIsModalActive(true);
                 setSelectedBook(book);
+                setIsModalActive(true);
               }}
             >
               <BookCard book={book} />

@@ -1,9 +1,9 @@
 import { BASE_URL } from "@/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-const BookModal = ({ setIsModalActive, book = {} }) => {
+const BookModal = ({ setIsModalActive, book }) => {
   const [title, setTitle] = useState(book.title || "");
   const [author, setAuthor] = useState(book.author || "");
   const [genre, setGenre] = useState(book.genre || "");
@@ -221,7 +221,9 @@ const BookModal = ({ setIsModalActive, book = {} }) => {
               <button
                 type="button"
                 className="bg-red-800 text-gray-100 px-4 py-2 rounded-md"
-                onClick={() => setIsModalActive(false)}
+                onClick={() => {
+                  setIsModalActive(false);
+                }}
               >
                 Close
               </button>
