@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -24,7 +24,7 @@ const BookModal = ({ setIsModalActive, book }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          //TODO: Show a notification
+          alert(data.error);
           console.log(data.error);
         } else {
           setIsModalActive(false);
@@ -40,7 +40,7 @@ const BookModal = ({ setIsModalActive, book }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          //TODO: Show a notification
+          alert(data.error);
           console.log(data.error);
         } else {
           setIsModalActive(false);
@@ -77,11 +77,9 @@ const BookModal = ({ setIsModalActive, book }) => {
     <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
       <div className="bg-slate-200 m-auto py-8 px-16 rounded-lg">
         <div className="flex flex-col items-center">
-          <h2 className="font-bold text-2xl text-gray-800">
+          <h2 className="font-bold text-2xl text-gray-800 mb-6">
             {book._id ? "Edit Book" : "Create Book"}
           </h2>
-          <br />
-
           <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
@@ -93,7 +91,7 @@ const BookModal = ({ setIsModalActive, book }) => {
               <input
                 type="text"
                 id="title"
-                className="bg-gray-50 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="border text-gray-200 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:border-blue-500"
                 placeholder="The Great Gatsby"
                 value={title}
                 required
@@ -110,7 +108,7 @@ const BookModal = ({ setIsModalActive, book }) => {
               <input
                 type="text"
                 id="author"
-                className="bg-gray-50 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Scott Fitzgeral"
                 value={author}
                 required
@@ -127,7 +125,7 @@ const BookModal = ({ setIsModalActive, book }) => {
               <input
                 type="text"
                 id="genre"
-                className="bg-gray-50 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Classic Literature"
                 value={genre}
                 required
@@ -144,7 +142,7 @@ const BookModal = ({ setIsModalActive, book }) => {
               <input
                 type="text"
                 id="isbn"
-                className="bg-gray-50 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="border border-gray-300 text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 r-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="13-digit code"
                 value={isbn}
                 required
@@ -159,7 +157,7 @@ const BookModal = ({ setIsModalActive, book }) => {
                 Year
               </label>
               <input
-                className="bg-gray-50 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 text-center"
                 type="number"
                 id="year"
                 aria-describedby="helper-text-explanation"
@@ -172,7 +170,7 @@ const BookModal = ({ setIsModalActive, book }) => {
               />
               <p
                 id="helper-text-explanation"
-                className="mt-2 text-sm text-gray-500 dark:text-gray-400"
+                className="mt-2 text-sm text-gray-400"
               >
                 Please select a number from 1 to {CURRENT_YEAR}
               </p>
@@ -188,7 +186,7 @@ const BookModal = ({ setIsModalActive, book }) => {
                 type="number"
                 id="copies"
                 aria-describedby="helper-text-explanation"
-                className="bg-gray-50 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 text-center"
                 min={1}
                 max={35}
                 placeholder="1"
@@ -198,7 +196,7 @@ const BookModal = ({ setIsModalActive, book }) => {
               />
               <p
                 id="helper-text-explanation"
-                className="mt-2 text-sm text-gray-500 dark:text-gray-400"
+                className="mt-2 text-sm text-gray-400"
               >
                 Please select a number from 1 to 35
               </p>
