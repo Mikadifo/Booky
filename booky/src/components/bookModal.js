@@ -1,5 +1,6 @@
 import { BASE_URL } from "@/constants";
 import { useState } from "react";
+import Input from "./input";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -63,7 +64,7 @@ const BookModal = ({ setIsModalActive, book }) => {
     if (book._id) {
       saveBook(newBook, `${BASE_URL}/update/${book._id}`);
     } else {
-      saveBook(null, newBook, `${BASE_URL}/create`);
+      saveBook(newBook, `${BASE_URL}/create`);
     }
   };
 
@@ -82,90 +83,54 @@ const BookModal = ({ setIsModalActive, book }) => {
           </h2>
           <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
             <div className="mb-5">
-              <label
-                htmlFor="title"
-                className="block mb-2 text-md text-gray-900 font-bold"
-              >
-                Title
-              </label>
-              <input
+              <Input
                 type="text"
+                label="Title"
                 id="title"
-                className="border text-gray-200 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:border-blue-500"
-                placeholder="The Great Gatsby"
                 value={title}
-                required
+                placeholder="The Great Gatsby"
                 onChange={({ target }) => setTitle(target.value)}
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="author"
-                className="block mb-2 text-md text-gray-900 font-bold"
-              >
-                Author
-              </label>
-              <input
+              <Input
                 type="text"
+                label="Author"
                 id="author"
-                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Scott Fitzgeral"
                 value={author}
-                required
+                placeholder="Scott Fitzgeral"
                 onChange={({ target }) => setAuthor(target.value)}
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="genre"
-                className="block mb-2 text-md text-gray-900 font-bold"
-              >
-                Genre
-              </label>
-              <input
+              <Input
                 type="text"
+                label="Genre"
                 id="genre"
-                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Classic Literature"
                 value={genre}
-                required
+                placeholder="Classic Literature"
                 onChange={({ target }) => setGenre(target.value)}
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="isbn"
-                className="block mb-2 text-md text-gray-900 font-bold"
-              >
-                ISBN
-              </label>
-              <input
+              <Input
                 type="text"
+                label="ISBN"
                 id="isbn"
-                className="border border-gray-300 text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 r-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="13-digit code"
                 value={isbn}
-                required
+                placeholder="13-digit code"
                 onChange={({ target }) => setIsbn(target.value)}
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="year"
-                className="block mb-2 text-md font-bold text-gray-800"
-              >
-                Year
-              </label>
-              <input
-                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 text-center"
+              <Input
                 type="number"
+                label="Year"
                 id="year"
-                aria-describedby="helper-text-explanation"
-                placeholder="1"
-                required
+                value={year}
+                placeholder="2012"
                 min={1}
                 max={CURRENT_YEAR}
-                value={year}
                 onChange={({ target }) => setYear(target.value)}
               />
               <p
@@ -176,22 +141,14 @@ const BookModal = ({ setIsModalActive, book }) => {
               </p>
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="copies"
-                className="block mb-2 text-md font-bold text-gray-800"
-              >
-                Copies
-              </label>
-              <input
+              <Input
                 type="number"
+                label="Copies"
                 id="copies"
-                aria-describedby="helper-text-explanation"
-                className="border text-gray-200 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 text-center"
+                value={copies}
+                placeholder="15"
                 min={1}
                 max={35}
-                placeholder="1"
-                required
-                value={copies}
                 onChange={({ target }) => setCopies(target.value)}
               />
               <p
