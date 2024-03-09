@@ -68,6 +68,23 @@ recordRoutes.route("/customer/:userID").get(async (req, res) => {
   }
 });
 
+recordRoutes.route("/book/borrow/:userID/:bookID").put(async (req, res) => {
+  const customer = await Customer.findOne({ userID: req.params.userID });
+  const book = await Book.findOne({ _id: req.params.bookID });
+  customer.booksBorrowed.push(req.params.bookID);
+  book.copies--;
+  customer.save();
+  book.save();
+  res.status(200).json({
+    message: "Book was lent successfully",
+    error: "",
+    data: {
+      book,
+      customer,
+    },
+  });
+});
+
 recordRoutes.route("*").all((req, res) => {
   throw {
     statusCode: 404,
