@@ -1,4 +1,14 @@
-const Input = ({ type, label, id, value, placeholder, onChange, min, max }) => {
+const Input = ({
+  type,
+  label,
+  id,
+  value,
+  placeholder,
+  onChange,
+  min,
+  max,
+  disabled,
+}) => {
   return (
     <>
       <label
@@ -15,6 +25,7 @@ const Input = ({ type, label, id, value, placeholder, onChange, min, max }) => {
         }`}
         placeholder={placeholder}
         value={value}
+        disabled={disabled}
         onChange={onChange}
         min={min}
         max={max}

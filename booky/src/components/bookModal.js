@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/constants";
 import { useState } from "react";
 import BookForm from "./bookForm";
+import CustomerModal from "./customerModal";
 
 const BookModal = ({ setIsModalActive, book }) => {
   const [title, setTitle] = useState(book.title || "");
@@ -12,6 +13,7 @@ const BookModal = ({ setIsModalActive, book }) => {
   const [availableOnline, setAvailableOnline] = useState(
     book.availableOnline || false
   );
+  const [isCustomerModalActive, setIsCustomerModalActive] = useState(false);
 
   const saveBook = (body, url) => {
     fetch(url, {
@@ -32,7 +34,7 @@ const BookModal = ({ setIsModalActive, book }) => {
   };
 
   const deleteBook = () => {
-    fetch(`${BASE_URL}/delete/${book._id}`, {
+    fetch(`${BASE_URL}/book/delete/${book._id}`, {
       method: "DELETE",
       mode: "cors",
     })
@@ -60,9 +62,9 @@ const BookModal = ({ setIsModalActive, book }) => {
     };
 
     if (book._id) {
-      saveBook(newBook, `${BASE_URL}/update/${book._id}`);
+      saveBook(newBook, `${BASE_URL}/book/update/${book._id}`);
     } else {
-      saveBook(newBook, `${BASE_URL}/create`);
+      saveBook(newBook, `${BASE_URL}/book/create`);
     }
   };
 
@@ -71,6 +73,12 @@ const BookModal = ({ setIsModalActive, book }) => {
     const confirmation = confirm(`Delete ${book.title}?`);
     if (confirmation) deleteBook();
   };
+
+  if (isCustomerModalActive) {
+    return (
+      <CustomerModal setIsCustomerModalActive={setIsCustomerModalActive} />
+    );
+  }
 
   return (
     <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
@@ -98,6 +106,7 @@ const BookModal = ({ setIsModalActive, book }) => {
             setAvailableOnline={setAvailableOnline}
             newBook={!book._id}
             setIsModalActive={setIsModalActive}
+            setIsCustomerModalActive={setIsCustomerModalActive}
           />
         </div>
       </div>

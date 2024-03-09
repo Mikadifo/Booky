@@ -5,6 +5,7 @@ import { CURRENT_YEAR } from "@/constants";
 const BookForm = ({
   onSubmit,
   handleDelete,
+  setIsCustomerModalActive,
   title,
   author,
   isbn,
@@ -134,6 +135,12 @@ const BookForm = ({
               label="Delete"
               color="bg-orange-700"
               onClick={handleDelete}
+            />
+            <Button
+              type="button"
+              label="Borrow"
+              color="bg-blue-700"
+              onClick={() => setIsCustomerModalActive(true)}
             />
             <Button type="submit" label="Save" color="bg-green-800" />
           </>

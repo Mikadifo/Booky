@@ -16,7 +16,7 @@ const BookList = () => {
   const [isModalActive, setIsModalActive] = useState(false);
 
   const fetchAllBooks = () => {
-    fetch(`${BASE_URL}/list`)
+    fetch(`${BASE_URL}/book/list`)
       .then((res) => res.json())
       .then((data) => {
         setBooks(data);
