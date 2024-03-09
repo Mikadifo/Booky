@@ -1,5 +1,6 @@
 const express = require("express");
 const Book = require("./models/book.js");
+const Customer = require("./models/customer.js");
 
 const recordRoutes = express.Router();
 
@@ -49,6 +50,22 @@ recordRoutes.route("/book/update/:id").put(async (req, res) => {
 recordRoutes.route("/book/delete/:id").delete(async (req, res) => {
   await Book.deleteOne({ _id: req.params.id });
   res.status(200).json({ message: "Book Deleted", error: "" });
+});
+
+recordRoutes.route("/customer/:userID").get(async (req, res) => {
+  const customer = await Customer.findOne({ userID: req.params.userID });
+  if (customer) {
+    res.status(200).json({
+      message: "",
+      error: "",
+      data: customer,
+    });
+  } else {
+    res.status(400).json({
+      message: "",
+      error: "User ID not found.",
+    });
+  }
 });
 
 recordRoutes.route("*").all((req, res) => {
