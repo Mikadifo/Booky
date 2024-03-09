@@ -120,22 +120,22 @@ const BookForm = ({
         <Button
           type="button"
           label="Close"
-          color="red-800"
+          color="bg-red-800"
           onClick={() => {
             setIsModalActive(false);
           }}
         />
         {newBook ? (
-          <Button type="submit" label="Create" color="green-800" />
+          <Button type="submit" label="Create" color="bg-green-800" />
         ) : (
           <>
             <Button
               type="button"
               label="Delete"
-              color="orange-700"
+              color="bg-orange-700"
               onClick={handleDelete}
             />
-            <Button type="submit" label="Save" color="green-800" />
+            <Button type="submit" label="Save" color="bg-green-800" />
           </>
         )}
       </div>

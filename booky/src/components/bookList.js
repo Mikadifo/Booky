@@ -46,7 +46,7 @@ const BookList = () => {
         <Button
           type="button"
           label="New"
-          color="green-800"
+          color="bg-green-800"
           onClick={() => {
             setSelectedBook({});
             setIsModalActive(true);
