@@ -70,7 +70,7 @@ const BookList = () => {
           <input
             type="text"
             id="table-search"
-            className="block p-2 ps-10 text-sm text-gray-900 border rounded-lg w-80 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
+            className="block p-2 ps-10 text-sm text-white border rounded-lg w-80 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
             value={search}
             onChange={handleSearch}
             placeholder="Search for books"
