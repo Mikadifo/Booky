@@ -40,7 +40,12 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID, isReturn }) => {
   };
 
   const createUser = async () => {
-    fetch(`${BASE_URL}/customer/create`, {
+    //try {
+    //const response = await
+    //} catch (error) {
+
+    //}
+    await fetch(`${BASE_URL}/customer/create`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -57,8 +62,8 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID, isReturn }) => {
       });
   };
 
-  const borrowBook = () => {
-    fetch(`${BASE_URL}/book/borrow/${userID}/${bookID}`, {
+  const borrowBook = async () => {
+    await fetch(`${BASE_URL}/book/borrow/${userID}/${bookID}`, {
       method: "PUT",
       mode: "cors",
     })
@@ -102,7 +107,7 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID, isReturn }) => {
     if (isNewUser) {
       await createUser();
     }
-    borrowBook();
+    await borrowBook();
   };
 
   return (
