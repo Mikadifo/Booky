@@ -48,8 +48,8 @@ recordRoutes.route("/book/delete/:id").delete(async (req, res) => {
   res.status(200).json({ message: "Book Deleted", error: "" });
 });
 
-recordRoutes.route("/customer/list").get(async (req, res) => {
-  res.status(200).json(await Customer.find());
+recordRoutes.route("/book/list").get(async (_, res) => {
+  res.status(200).json(await Book.find());
 });
 
 recordRoutes.route("/customer/:userID").get(async (req, res) => {
