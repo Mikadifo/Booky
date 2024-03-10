@@ -26,7 +26,7 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
       });
   };
 
-  const createUser = () => {
+  const createUser = async () => {
     fetch(`${BASE_URL}/customer/create`, {
       method: "POST",
       mode: "cors",
@@ -39,7 +39,6 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
           alert(data.error);
           console.log(data.error);
         } else {
-          console.log(data);
           setIsCustomerModalActive(false);
         }
       });
@@ -61,7 +60,7 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
       });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (isNewUser === null) {
       getUserByID();
@@ -69,7 +68,7 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
       return;
     }
     if (isNewUser) {
-      createUser();
+      await createUser();
     }
     borrowBook();
   };
