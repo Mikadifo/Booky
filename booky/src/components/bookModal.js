@@ -9,7 +9,7 @@ const BookModal = ({ setIsModalActive, book }) => {
   const [genre, setGenre] = useState(book.genre || "");
   const [isbn, setIsbn] = useState(book.isbn || "");
   const [year, setYear] = useState(book.year || 1);
-  const [copies, setCopies] = useState(book.copies || 1);
+  const [copies, setCopies] = useState(book.copies || 0);
   const [availableOnline, setAvailableOnline] = useState(
     book.availableOnline || false
   );

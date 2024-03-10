@@ -91,7 +91,7 @@ const BookForm = ({
             id="copies"
             value={copies}
             placeholder="15"
-            min={1}
+            min={0}
             max={35}
             onChange={({ target }) => setCopies(target.value)}
           />
@@ -99,7 +99,7 @@ const BookForm = ({
             id="helper-text-explanation"
             className="mt-2 text-sm text-gray-400"
           >
-            Please select a number from 1 to 35
+            Please select a number from 0 to 35
           </p>
         </div>
       </div>
@@ -140,7 +140,13 @@ const BookForm = ({
               type="button"
               label="Borrow"
               color="bg-blue-700"
-              onClick={() => setIsCustomerModalActive(true)}
+              onClick={() => {
+                if (copies >= 1) {
+                  setIsCustomerModalActive(true);
+                } else {
+                  alert(`There are not enough copies of ${title}`);
+                }
+              }}
             />
             <Button type="submit" label="Save" color="bg-green-800" />
           </>
