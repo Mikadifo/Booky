@@ -10,7 +10,7 @@ const bookSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: true,
-    min: 0,
+    min: 1,
     max: [CURRENT_YEAR, `Year cannot be greater than ${CURRENT_YEAR}`],
   },
   copies: {
