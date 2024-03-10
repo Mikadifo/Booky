@@ -68,6 +68,24 @@ recordRoutes.route("/customer/:userID").get(async (req, res) => {
   }
 });
 
+recordRoutes.route("/customer/create").post(async (req, res) => {
+  const customer = Customer({ ...req.body, booksBorrowed: [] });
+  const error = customer.validateSync();
+  if (error && error.name === "ValidationError") {
+    res.status(400).json({
+      message: "",
+      error: error.message,
+    });
+  } else {
+    await customer.save();
+    res.status(201).json({
+      message: "Customer saved!",
+      error: "",
+      data: { customer: req.body },
+    });
+  }
+});
+
 recordRoutes.route("/book/borrow/:userID/:bookID").put(async (req, res) => {
   const customer = await Customer.findOne({ userID: req.params.userID });
   const book = await Book.findOne({ _id: req.params.bookID });
