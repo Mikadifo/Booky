@@ -5,10 +5,16 @@ This folder contains a NextJS React app that consumes [bookyAPI](../server/) end
 ## Client Features
 
 - Book
+
   - **List:** Shows a table with clickable rows.
   - **Create:** A button named `New` that opens a modal with a empty form.
   - **Update:** Opens a modal with the information of the selected row.
   - **Delete:** A button named `Delete` is available when a row is selected. Asks for confirmation before deleting.
+  - Borrow: A button named `Borrow` is available when a row is selected. It opens a form requesting the customer information.
+  - Return: A button named `Return` is available when a row is selected. It opens a form requesting the customer information.
+
+- Customer
+  - Create: A new customer can be created when it attempts to borrow a book and their ID is not in the system.
 
 ## Libraries and Frameworks
 
