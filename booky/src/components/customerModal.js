@@ -26,10 +26,27 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
       });
   };
 
-  const createUser = () => {};
+  const createUser = () => {
+    fetch(`${BASE_URL}/customer/create`, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userID, name: userName }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+          console.log(data.error);
+        } else {
+          console.log(data);
+          setIsCustomerModalActive(false);
+        }
+      });
+  };
 
   const borrowBook = () => {
-    fetch(`${BASE_URL}/book/${userID}/${bookID}`, {
+    fetch(`${BASE_URL}/book/borrow/${userID}/${bookID}`, {
       method: "PUT",
       mode: "cors",
     })
@@ -53,7 +70,6 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
     }
     if (isNewUser) {
       createUser();
-      return;
     }
     borrowBook();
   };
@@ -62,7 +78,7 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
     <dialog className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50 z-50 overflow-auto backdrop-blur flex justify-center items-center">
       <div className="bg-slate-200 m-auto py-8 px-16 rounded-lg">
         <div className="flex flex-col items-center">
-          <h2 className="font-bold text-2xl text-gray-800 mb-6">Jey</h2>
+          <h2 className="font-bold text-2xl text-gray-800 mb-6">Customer</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
@@ -81,9 +97,9 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
               <Input
                 type="text"
                 label="User Name"
-                id="userID"
+                id="userName"
                 value={userName}
-                placeholder="User City ID"
+                placeholder="User Full Name"
                 onChange={({ target }) => setUserName(target.value)}
               />
             </div>
