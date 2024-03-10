@@ -81,7 +81,7 @@ recordRoutes.route("/customer/create").post(async (req, res) => {
     res.status(201).json({
       message: "Customer saved!",
       error: "",
-      data: { customer: req.body },
+      data: { customer },
     });
   }
 });
