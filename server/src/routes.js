@@ -26,10 +26,6 @@ recordRoutes.route("/book/create").post(async (req, res) => {
   }
 });
 
-recordRoutes.route("/book/list").get(async (_, res) => {
-  res.status(200).json(await Book.find());
-});
-
 recordRoutes.route("/book/update/:id").put(async (req, res) => {
   try {
     const book = await Book.findByIdAndUpdate(req.params.id, req.body, {
