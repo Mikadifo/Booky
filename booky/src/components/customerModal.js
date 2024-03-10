@@ -3,7 +3,7 @@ import Button from "./button";
 import Input from "./input";
 import { BASE_URL } from "@/constants";
 
-const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
+const CustomerModal = ({ setIsCustomerModalActive, bookID, isReturn }) => {
   const [userID, setUserID] = useState("");
   const [userName, setUserName] = useState("");
   const [isNewUser, setIsNewUser] = useState(null);
@@ -14,12 +14,25 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
       .then((data) => {
         if (data.error) {
           if (data.error === "User ID not found.") {
-            setIsNewUser(true);
+            if (!isReturn) {
+              setIsNewUser(true);
+            } else {
+              alert(data.error);
+            }
           } else {
             alert(data.error);
             console.log(data.error);
           }
         } else {
+          if (isReturn) {
+            if (
+              data.data.booksBorrowed.filter((book) => book === bookID)
+                .length <= 0
+            ) {
+              alert(`${data.data.name} has not borrowed this book.`);
+              return;
+            }
+          }
           setIsNewUser(false);
           setUserName(data.data.name);
         }
@@ -60,11 +73,30 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
       });
   };
 
+  const returnBook = () => {
+    fetch(`${BASE_URL}/book/return/${userID}/${bookID}`, {
+      method: "PUT",
+      mode: "cors",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+          console.log(data.error);
+        } else {
+          setIsCustomerModalActive(false);
+        }
+      });
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (isNewUser === null) {
       getUserByID();
-      console.log(userID);
+      return;
+    }
+    if (isReturn) {
+      returnBook();
       return;
     }
     if (isNewUser) {
@@ -125,6 +157,8 @@ const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
                   ? "Save and Borrow"
                   : isNewUser === null
                   ? "Check ID"
+                  : isReturn
+                  ? "Return"
                   : "Borrow"
               }
               color="bg-green-800"

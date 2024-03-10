@@ -6,6 +6,7 @@ const BookForm = ({
   onSubmit,
   handleDelete,
   setIsCustomerModalActive,
+  setIsReturn,
   title,
   author,
   isbn,
@@ -117,7 +118,7 @@ const BookForm = ({
           </span>
         </label>
       </div>
-      <div className="flex justify-around mt-8">
+      <div className="flex flex-wrap justify-around gap-4">
         <Button
           type="button"
           label="Close"
@@ -136,19 +137,31 @@ const BookForm = ({
               color="bg-orange-700"
               onClick={handleDelete}
             />
-            <Button
-              type="button"
-              label="Borrow"
-              color="bg-blue-700"
-              onClick={() => {
-                if (copies >= 1) {
-                  setIsCustomerModalActive(true);
-                } else {
-                  alert(`There are not enough copies of ${title}`);
-                }
-              }}
-            />
             <Button type="submit" label="Save" color="bg-green-800" />
+            <div className="flex gap-8">
+              <Button
+                type="button"
+                label="Borrow"
+                color="bg-blue-700"
+                onClick={() => {
+                  if (copies >= 1) {
+                    setIsCustomerModalActive(true);
+                    setIsReturn(false);
+                  } else {
+                    alert(`There are not enough copies of ${title}`);
+                  }
+                }}
+              />
+              <Button
+                type="button"
+                label="Return"
+                color="bg-blue-700"
+                onClick={() => {
+                  setIsCustomerModalActive(true);
+                  setIsReturn(true);
+                }}
+              />
+            </div>
           </>
         )}
       </div>

@@ -14,6 +14,7 @@ const BookModal = ({ setIsModalActive, book }) => {
     book.availableOnline || false
   );
   const [isCustomerModalActive, setIsCustomerModalActive] = useState(false);
+  const [isReturn, setIsReturn] = useState(false);
 
   const saveBook = (body, url) => {
     fetch(url, {
@@ -79,6 +80,7 @@ const BookModal = ({ setIsModalActive, book }) => {
       <CustomerModal
         setIsCustomerModalActive={setIsCustomerModalActive}
         bookID={book._id}
+        isReturn={isReturn}
       />
     );
   }
@@ -110,6 +112,7 @@ const BookModal = ({ setIsModalActive, book }) => {
             newBook={!book._id}
             setIsModalActive={setIsModalActive}
             setIsCustomerModalActive={setIsCustomerModalActive}
+            setIsReturn={setIsReturn}
           />
         </div>
       </div>
