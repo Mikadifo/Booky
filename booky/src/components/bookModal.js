@@ -76,7 +76,10 @@ const BookModal = ({ setIsModalActive, book }) => {
 
   if (isCustomerModalActive) {
     return (
-      <CustomerModal setIsCustomerModalActive={setIsCustomerModalActive} />
+      <CustomerModal
+        setIsCustomerModalActive={setIsCustomerModalActive}
+        bookID={book._id}
+      />
     );
   }
 

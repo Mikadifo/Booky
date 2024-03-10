@@ -3,25 +3,10 @@ import Button from "./button";
 import Input from "./input";
 import { BASE_URL } from "@/constants";
 
-const CustomerModal = ({ setIsCustomerModalActive }) => {
+const CustomerModal = ({ setIsCustomerModalActive, bookID }) => {
   const [userID, setUserID] = useState("");
   const [userName, setUserName] = useState("");
   const [isNewUser, setIsNewUser] = useState(null);
-  //const borrowBook = () => {
-  //fetch(`${BASE_URL}/book/${userID}/${book._id}`, {
-  //method: "DELETE",
-  //mode: "cors",
-  //})
-  //.then((res) => res.json())
-  //.then((data) => {
-  //if (data.error) {
-  //alert(data.error);
-  //console.log(data.error);
-  //} else {
-  //setIsModalActive(false);
-  //}
-  //});
-  //};
 
   const getUserByID = () => {
     fetch(`${BASE_URL}/customer/${userID}`)
@@ -41,10 +26,36 @@ const CustomerModal = ({ setIsCustomerModalActive }) => {
       });
   };
 
+  const createUser = () => {};
+
+  const borrowBook = () => {
+    fetch(`${BASE_URL}/book/${userID}/${bookID}`, {
+      method: "PUT",
+      mode: "cors",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+          console.log(data.error);
+        } else {
+          setIsCustomerModalActive(false);
+        }
+      });
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    getUserByID();
-    console.log(userID);
+    if (isNewUser === null) {
+      getUserByID();
+      console.log(userID);
+      return;
+    }
+    if (isNewUser) {
+      createUser();
+      return;
+    }
+    borrowBook();
   };
 
   return (
